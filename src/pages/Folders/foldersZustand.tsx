@@ -19,7 +19,6 @@ const useFolderStore = create((set, get) => ({
       `folders/${folder.id}`,
       folder
     );
-
     set({
       folders: get().folders.map((f: any) =>
         f.id === folder.id ? res.data : f
