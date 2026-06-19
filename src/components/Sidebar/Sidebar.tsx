@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
-  LayoutDashboard, CreditCard, 
+  LayoutDashboard, CreditCard,
   Users, FolderOpen, UserCog, TrendingUp,
   ChevronRight, ChevronUp, LogOut, User,
 } from "lucide-react";
@@ -9,16 +9,21 @@ import { axiosRequest } from "../../utils/axios";
 
 const NAV = [
   { label: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
-  { label: "Debts",     icon: CreditCard,       path: "debts" },
-  { label: "Contacts",  icon: Users,             path: "contacts" },
-  { label: "Folders",   icon: FolderOpen,        path: "folders" },
-  { label: "Users",     icon: UserCog,           path: "users" },
+  { label: "Debts",     icon: CreditCard,       path: "/dashboard/debts" },
+  { label: "Contacts",  icon: Users,             path: "/dashboard/contacts" },
+  { label: "Folders",   icon: FolderOpen,        path: "/dashboard/folders" },
+  { label: "Users",     icon: UserCog,           path: "/dashboard/users" },
 ];
+
+// Light pastel colors picked randomly on hover.
+const HOVER_COLORS = ["#ECFDF5", "#EEF2FF", "#FEF3C7", "#FCE7F3", "#E0F2FE", "#F3E8FF"];
 
 export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [open, setOpen] = useState(false);
+  const [hoverColor, setHoverColor] = useState<string | null>(null);
+  const [hoveredPath, setHoveredPath] = useState<string | null>(null);
 
   const name     = localStorage.getItem("userName") ?? "User";
   const role     = localStorage.getItem("userRole") ?? "Member";
@@ -39,6 +44,11 @@ export default function Sidebar() {
     navigate(path);
   }
 
+  function handleHover(path: string) {
+    setHoveredPath(path);
+    setHoverColor(HOVER_COLORS[Math.floor(Math.random() * HOVER_COLORS.length)]);
+  }
+
   return (
     <>
       <style>{`
@@ -46,12 +56,8 @@ export default function Sidebar() {
           from { opacity: 0; transform: translateY(10px) scale(0.97); }
           to   { opacity: 1; transform: translateY(0)    scale(1); }
         }
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to   { opacity: 1; }
-        }
         .popup-enter  { animation: slideUp 0.18s cubic-bezier(0.16,1,0.3,1) forwards; }
-        .nav-item     { transition: background 0.15s, color 0.15s, transform 0.12s; }
+        .nav-item     { transition: background-color 0.25s ease, color 0.15s, transform 0.12s; }
         .nav-item:hover { transform: translateX(2px); }
         .nav-icon     { transition: background 0.15s, color 0.15s, box-shadow 0.15s, transform 0.15s; }
         .nav-item:hover .nav-icon { transform: scale(1.08); }
@@ -79,15 +85,24 @@ export default function Sidebar() {
         {/* Nav */}
         <nav className="flex-1 px-3 space-y-0.5">
           {NAV.map(({ label, icon: Icon, path }) => {
-            const active = location.pathname === path;
+            const active =
+              path === "/dashboard"
+                ? location.pathname === "/dashboard"
+                : location.pathname.startsWith(path);
+            const isHovered = !active && hoveredPath === path;
+
             return (
-              <button key={path} onClick={() => navTo(path)}
+              <button
+                key={path}
+                onClick={() => navTo(path)}
+                onMouseEnter={() => handleHover(path)}
+                onMouseLeave={() => setHoveredPath(null)}
+                style={isHovered ? { backgroundColor: hoverColor ?? undefined } : undefined}
                 className={`nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium
-                  ${active ? "bg-emerald-50 text-emerald-600" : "text-gray-500 hover:bg-gray-50 hover:text-gray-800"}`}>
+                  ${active ? "bg-emerald-50 text-emerald-600" : "text-gray-500 hover:text-gray-800"}`}
+              >
                 <span className={`nav-icon w-8 h-8 rounded-lg flex items-center justify-center
-                  ${active
-                    ? "bg-emerald-500 text-white shadow-md shadow-emerald-200"
-                    : "bg-gray-100 text-gray-400 group-hover:bg-gray-200"}`}>
+                  ${active ? "bg-emerald-500 text-white shadow-md shadow-emerald-200" : "bg-gray-100 text-gray-400"}`}>
                   <Icon className="w-4 h-4" />
                 </span>
                 <span className="flex-1 text-left">{label}</span>
@@ -119,7 +134,7 @@ export default function Sidebar() {
               <div className="h-px bg-gray-100 mx-4" />
 
               {/* Profile */}
-              <button onClick={() => navTo("profile")}
+              <button onClick={() => navTo("/dashboard/profile")}
                 className="w-full flex items-center gap-3 px-4 py-3.5 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors group">
                 <span className="w-8 h-8 rounded-xl bg-gray-100 group-hover:bg-gray-200 flex items-center justify-center transition-colors shrink-0">
                   <User className="w-3.5 h-3.5" />
