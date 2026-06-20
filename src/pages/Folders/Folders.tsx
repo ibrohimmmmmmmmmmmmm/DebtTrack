@@ -7,9 +7,9 @@ import { Folder, FolderPlus, ArrowRight, X, Palette, Clock, Sparkles } from 'luc
 const SWATCHES = ['#6366F1', '#22C55E', '#F59E0B', '#EC4899', '#06B6D4', '#EF4444'];
 
 export default function Folders() {
-  const { getFolders, postFolder, updateFolder, deleteFolder } = useFolderStore((state) => state);
+  const { getFolders, postFolder } : any = useFolderStore((state) => state);
   const [open, setOpen] = useState(false);
-  const folders = useFolderStore((state) => state.folders);
+  const folders = useFolderStore((state : any) => state.folders);
 
   useEffect(() => {
     getFolders();
@@ -19,7 +19,6 @@ export default function Folders() {
     register,
     handleSubmit,
     watch,
-    setValue,
     reset,
     formState: { errors },
   } = useForm();

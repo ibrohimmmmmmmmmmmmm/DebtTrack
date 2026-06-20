@@ -8,14 +8,14 @@ const SWATCHES = ['#6366F1', '#22C55E', '#F59E0B', '#EC4899', '#06B6D4', '#EF444
 
 export default function FolderDetail() {
   const navigate = useNavigate();
-  const { updateFolder, deleteFolder } = useFolderStore((state) => state);
+  const { updateFolder, deleteFolder } = useFolderStore((state: any) => state);
   const { register, handleSubmit, watch, setValue } = useForm();
   const [open, SetOpen] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
   const { id } = useParams();
 
-  const folder = useFolderStore((state) =>
+  const folder = useFolderStore((state: any) =>
     state.folders.find((f: any) => String(f.id) === id)
   );
 
@@ -73,7 +73,6 @@ export default function FolderDetail() {
         }
       `}</style>
 
-      {/* Back link */}
       <button
         onClick={() => navigate('/dashboard/folders')}
         className="fd-section mb-6 flex items-center gap-1.5 text-sm font-medium text-slate-500 transition-colors hover:text-slate-900"
@@ -82,7 +81,6 @@ export default function FolderDetail() {
         Back to Folders
       </button>
 
-      {/* Hero */}
       <div
         className="fd-section relative mb-8 overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 sm:p-8"
         style={{ animationDelay: '60ms' }}

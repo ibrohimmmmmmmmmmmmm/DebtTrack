@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
-import useContactsZustand from './ContactsZustand'
-import { useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { ArrowLeft, CalendarClock, Clock, Mail, Pencil, Phone, Sparkles, StickyNote, Trash2, X } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { ArrowLeft, Pencil, Trash2, X, Sparkles, Mail, Phone, StickyNote, Clock, CalendarClock } from 'lucide-react'
+import { useNavigate, useParams } from 'react-router-dom'
+import useContactsZustand from './ContactsZustand'
 
 export default function ContactDetail () {
     const {contacts, getContacts, updateContacts, deleteContacts} = useContactsZustand((state: any) => state)

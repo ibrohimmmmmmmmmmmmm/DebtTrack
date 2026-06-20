@@ -18,7 +18,7 @@ export const useDebts = create<any>((set: any) => ({
   postDebts: async (debt: any) => {
     try {
       const res = await axiosRequest.post("/debts", debt);
-      set((state) => ({
+      set((state : any) => ({
         debts: [res.data, ...state.debts],
       }));
     } catch (error) {

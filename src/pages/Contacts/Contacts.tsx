@@ -5,7 +5,7 @@ import useContactsZustand from "./ContactsZustand";
 import { UserRound, UserPlus, Mail, Phone, ArrowRight, X, Sparkles, StickyNote } from "lucide-react";
 
 export default function Contacts() {
-  const { contacts, getContacts, postContacts } = useContactsZustand((state) => state);
+  const { contacts, getContacts, postContacts }: any = useContactsZustand((state) => state);
   const [open, setOpen] = useState(false);
   const { register, handleSubmit, reset } = useForm();
   const { id } = useParams();

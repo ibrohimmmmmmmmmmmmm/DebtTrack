@@ -13,7 +13,7 @@ const useContactsZustand = create((set, get) => ({
  postContacts: async (contact: any) => {
   try {
     const res = await axiosRequest.post("/contacts", contact);
-    set((state) => ({
+    set((state: any) => ({
       contacts: [...state.contacts, res.data],
     }));
   } catch (error) {
@@ -26,7 +26,7 @@ const useContactsZustand = create((set, get) => ({
     const res = await axiosRequest.patch(
       `/contacts/${contact.id}`,contact
     );
-    set((state) => ({
+    set((state: any) => ({
       contacts: state.contacts.map((c: any) =>
         c.id === contact.id ? res.data : c
       ),
@@ -36,7 +36,7 @@ const useContactsZustand = create((set, get) => ({
   deleteContacts: async (id: string) => {
     if (!id) return;
     await axiosRequest.delete(`/contacts/${id}`);
-    set((state) => ({
+    set((state : any) => ({
       contacts: state.contacts.filter((c: any) => c.id !== id),
     }));
   },

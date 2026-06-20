@@ -123,7 +123,7 @@ export default function Debts() {
       {/* Debt list */}
       {debts?.length ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {debts.map((debt, i) => {
+          {debts.map((debt: any, i: any) => {
             const isOwedToMe = debt.direction === "they_owe_me";
             return (
               <div

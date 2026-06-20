@@ -6,7 +6,7 @@ import {
 } from "lucide-react";
 
 export default function Dashboard() {
-  const { dashboard, getDashboard } = useDashboard((state) => state);
+  const { dashboard, getDashboard } : any = useDashboard((state) => state);
 
   useEffect(() => {
     getDashboard();
@@ -95,7 +95,7 @@ export default function Dashboard() {
               <>
                 <div className="flex h-4 w-full overflow-hidden rounded-full bg-gray-100">
                   <div
-                    className="db-bar h-full rounded-full bg-gradient-to-r from-emerald-400 to-emerald-500"
+                    className="db-bar h-full rounded-full bg-linear-to-r from-emerald-400 to-emerald-500"
                     style={{ ["--target-width" as any]: `${mePct}%` }}
                   />
                   <div
@@ -201,7 +201,7 @@ export default function Dashboard() {
           </div>
         ) : (
           <div className="space-y-2">
-            {dashboard.upcoming_due.map((item) => (
+            {dashboard.upcoming_due.map((item : any) => (
               <div key={item.id} className="flex items-center justify-between gap-3 rounded-xl border border-gray-100 p-3 transition-colors hover:bg-gray-50">
                 <div className="flex items-center gap-3">
                   <span className={`flex h-9 w-9 items-center justify-center rounded-full text-xs font-bold ${
