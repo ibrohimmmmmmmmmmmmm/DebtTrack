@@ -35,11 +35,9 @@ export default function Header({ userName = 'Ibrohim', userRole = 'Owner' }: Hea
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/80 backdrop-blur-xl">
-      {/* Click outside to close any open dropdown */}
       {openMenu && <div className="fixed inset-0 z-30" onClick={() => setOpenMenu(null)} />}
 
       <div className="flex h-16 items-center justify-between gap-3 px-4 sm:px-8">
-        {/* Search */}
         <div className="relative max-w-md flex-1">
           <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
           <input
@@ -48,9 +46,7 @@ export default function Header({ userName = 'Ibrohim', userRole = 'Owner' }: Hea
           />
         </div>
 
-        {/* Right side */}
         <div className="relative z-40 flex items-center gap-1.5 sm:gap-2">
-          {/* Language dropdown */}
           <div className="relative">
             <button onClick={() => toggleMenu('lang')} className="flex items-center gap-1.5 rounded-lg px-2 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100">
               <Globe className="h-4.5 w-4.5" />
@@ -74,7 +70,6 @@ export default function Header({ userName = 'Ibrohim', userRole = 'Owner' }: Hea
             )}
           </div>
 
-          {/* Quick theme toggle (light/dark) */}
           <button
             onClick={() => applyTheme(theme === 'dark' ? 'light' : 'dark')}
             className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100"
@@ -87,7 +82,7 @@ export default function Header({ userName = 'Ibrohim', userRole = 'Owner' }: Hea
           {/* Account button + panel */}
           <div className="relative">
             <button onClick={() => toggleMenu('account')} className="flex items-center gap-2 rounded-lg py-1.5 pl-1 pr-2 hover:bg-slate-100">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-indigo-700 text-xs font-bold text-white">
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-linear-to-br from-indigo-500 to-indigo-700 text-xs font-bold text-white">
                 {firstLetter}
               </div>
               <ChevronDown className="hidden h-3.5 w-3.5 text-slate-400 sm:inline" />
@@ -97,7 +92,7 @@ export default function Header({ userName = 'Ibrohim', userRole = 'Owner' }: Hea
               <div className="absolute right-0 mt-3 w-80 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl shadow-slate-900/10">
                 {/* Profile header */}
                 <div className="flex items-center gap-3 border-b border-slate-100 px-5 py-4">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-indigo-700 text-base font-bold text-white">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-full bg-linear-to-br from-indigo-500 to-indigo-700 text-base font-bold text-white">
                     {firstLetter}
                   </div>
                   <div>

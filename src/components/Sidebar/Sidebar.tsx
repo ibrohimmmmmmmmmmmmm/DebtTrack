@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   LayoutDashboard, CreditCard,
-  Users, FolderOpen, UserCog, TrendingUp,
+  Users, FolderOpen, TrendingUp,
   ChevronRight, ChevronUp, LogOut, User,
 } from "lucide-react";
 import { axiosRequest } from "../../utils/axios";
@@ -12,10 +12,8 @@ const NAV = [
   { label: "Debts",     icon: CreditCard,       path: "/dashboard/debts" },
   { label: "Contacts",  icon: Users,             path: "/dashboard/contacts" },
   { label: "Folders",   icon: FolderOpen,        path: "/dashboard/folders" },
-  // { label: "Users",     icon: UserCog,           path: "/dashboard/users" },
 ];
 
-// Light pastel colors picked randomly on hover.
 const HOVER_COLORS = ["#ECFDF5", "#EEF2FF", "#FEF3C7", "#FCE7F3", "#E0F2FE", "#F3E8FF"];
 
 export default function Sidebar() {
@@ -116,13 +114,9 @@ export default function Sidebar() {
           })}
         </nav>
 
-        {/* Footer */}
         <div className="px-3 pb-4 pt-3 border-t border-gray-100 relative">
-
-          {/* Popup */}
           {open && (
             <div className="popup-enter absolute bottom-[calc(100%-4px)] left-3 right-3 bg-white border border-gray-100 rounded-2xl shadow-2xl shadow-gray-200/60 overflow-hidden z-50">
-              {/* Logout */}
               <button onClick={handleLogout}
                 className="w-full flex items-center gap-3 px-4 py-3.5 text-sm font-medium text-gray-600 hover:bg-red-50 hover:text-red-500 transition-colors group">
                 <span className="w-8 h-8 rounded-xl bg-gray-100 group-hover:bg-red-100 flex items-center justify-center transition-colors shrink-0">
@@ -132,8 +126,6 @@ export default function Sidebar() {
               </button>
 
               <div className="h-px bg-gray-100 mx-4" />
-
-              {/* Profile */}
               <button onClick={() => navTo("/dashboard/profile")}
                 className="w-full flex items-center gap-3 px-4 py-3.5 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors group">
                 <span className="w-8 h-8 rounded-xl bg-gray-100 group-hover:bg-gray-200 flex items-center justify-center transition-colors shrink-0">
@@ -144,17 +136,15 @@ export default function Sidebar() {
             </div>
           )}
 
-          {/* User card */}
           <button onClick={() => setOpen((p) => !p)}
             className={`user-card w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left
               ${open
-                ? "bg-gradient-to-r from-emerald-50 to-white ring-1 ring-emerald-100 shadow-sm"
+                ? "bg-linear-to-r from-emerald-50 to-white ring-1 ring-emerald-100 shadow-sm"
                 : "hover:bg-gray-50"}`}>
-            {/* Avatar */}
             <div className={`w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0 transition-all
               ${open
-                ? "bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-lg shadow-emerald-200 scale-105"
-                : "bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-md shadow-emerald-100"}`}>
+                ? "bg-linear-to-br from-emerald-400 to-emerald-600 shadow-lg shadow-emerald-200 scale-105"
+                : "bg-linear-to-br from-emerald-400 to-emerald-600 shadow-md shadow-emerald-100"}`}>
               {initials}
             </div>
             <div className="flex-1 min-w-0">

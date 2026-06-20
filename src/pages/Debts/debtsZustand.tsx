@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { axiosRequest } from "../../utils/axios";
 
-export const useDebts = create<any>((set: any, get: any) => ({
+export const useDebts = create<any>((set: any) => ({
   debts: [],
   debt: null,
   payments: [],

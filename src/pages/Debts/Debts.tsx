@@ -1,25 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { useDebts } from "./debtsZustand";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import {
-  Plus,
-  X,
   ArrowDownLeft,
   ArrowUpRight,
   Calendar,
-  Wallet,
   ChevronRight,
   Inbox,
+  Plus,
+  Wallet,
+  X,
 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useDebts } from "./debtsZustand";
 
-// Safe arithmetic evaluator: only digits, + - * / ( ) . and spaces are ever allowed through.
 function evaluateExpression(expr: string): number | null {
   const cleaned = expr.trim();
   if (!cleaned) return null;
   if (!/^[0-9+\-*/().\s]*$/.test(cleaned)) return null;
   try {
-    // eslint-disable-next-line no-new-func
     const result = Function(`"use strict"; return (${cleaned})`)();
     return typeof result === "number" && isFinite(result) ? result : null;
   } catch {
