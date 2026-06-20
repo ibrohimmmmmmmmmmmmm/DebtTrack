@@ -6,25 +6,56 @@ import { ArrowLeft, Plus, Receipt, Wallet, Clock, Inbox } from "lucide-react";
 export default function DebtPayments() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const debt = useDebts((state: any) => state.debt);
+  const getDebtsById = useDebts((state: any) => state.getDebtsById);
+  const updateDebts = useDebts((state: any) => state.updateDebts);
   const payments = useDebts((state: any) => state.payments);
   const getPayments = useDebts((state: any) => state.getPayments);
   const postPayment = useDebts((state: any) => state.postPayment);
 
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
+  const [isPayment, setIsPayment] = useState(true);
 
-  useEffect(() => { if (id) getPayments(id); }, [id, getPayments]);
+  useEffect(() => { 
+    if (id) {
+      getPayments(id); 
+      getDebtsById(id);
+    }
+  }, [id, getPayments, getDebtsById]);
 
   const handleAddPayment = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (id && amount) {
-      await postPayment(id, { amount: Number(amount), note, paid_at: new Date().toISOString() });
+    if (id && amount && debt) {
+      const numAmount = Number(amount);
+      const finalNote = note.trim() === "" ? (isPayment ? "Payment" : "Increase") : note;
+      
+      await postPayment(id, { 
+        amount: numAmount, 
+        note: isPayment ? finalNote : `[Added] ${finalNote}`, 
+        paid_at: new Date().toISOString() 
+      });
+      
+      const newDebtAmount = isPayment ? debt.amount - numAmount : debt.amount + numAmount;
+      
+      const patchPayload = {
+        contact_id: debt.contact_id,
+        direction: debt.direction,
+        amount: newDebtAmount,
+        currency: debt.currency,
+        description: debt.description,
+        due_date: debt.due_date ? debt.due_date.split('T')[0] : null,
+        status: debt.status
+      };
+      
+      await updateDebts(id, patchPayload);
+
       setAmount("");
       setNote("");
     }
   };
 
-  const total = payments?.reduce((sum: number, p: any) => sum + Number(p.amount || 0), 0) || 0;
+  const total = payments?.reduce((sum: number, p: any) => sum + Number(p.amount > 0 ? p.amount : 0), 0) || 0;
   const inputCls = "w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all duration-150";
 
   return (
@@ -56,6 +87,27 @@ export default function DebtPayments() {
             <p className="text-sm text-slate-500 mb-5">Total paid so far: <span className="font-semibold text-emerald-600">{total}</span></p>
 
             <form onSubmit={handleAddPayment} className="space-y-3.5">
+              <div className="flex bg-slate-100 p-1 rounded-xl mb-4">
+                <button
+                  type="button"
+                  onClick={() => setIsPayment(true)}
+                  className={`flex-1 py-1.5 text-xs font-medium rounded-lg transition-colors ${
+                    isPayment ? "bg-white text-emerald-600 shadow-sm" : "text-slate-500 hover:text-slate-700"
+                  }`}
+                >
+                  Pay Debt (-)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsPayment(false)}
+                  className={`flex-1 py-1.5 text-xs font-medium rounded-lg transition-colors ${
+                    !isPayment ? "bg-white text-indigo-600 shadow-sm" : "text-slate-500 hover:text-slate-700"
+                  }`}
+                >
+                  Increase (+)
+                </button>
+              </div>
+              
               <div>
                 <label className="text-xs font-medium text-slate-500 mb-1.5 block">Amount</label>
                 <input type="number" placeholder="0.00" value={amount} onChange={(e) => setAmount(e.target.value)} required className={inputCls} />
