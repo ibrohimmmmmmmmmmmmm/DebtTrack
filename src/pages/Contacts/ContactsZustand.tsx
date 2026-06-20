@@ -12,9 +12,7 @@ const useContactsZustand = create((set, get) => ({
 
  postContacts: async (contact: any) => {
   try {
-    console.log("POSTING:", contact);
     const res = await axiosRequest.post("/contacts", contact);
-    console.log("RESPONSE:", res.data);
     set((state) => ({
       contacts: [...state.contacts, res.data],
     }));

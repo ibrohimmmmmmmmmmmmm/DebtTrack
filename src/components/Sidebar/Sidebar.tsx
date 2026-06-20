@@ -12,7 +12,7 @@ const NAV = [
   { label: "Debts",     icon: CreditCard,       path: "/dashboard/debts" },
   { label: "Contacts",  icon: Users,             path: "/dashboard/contacts" },
   { label: "Folders",   icon: FolderOpen,        path: "/dashboard/folders" },
-  { label: "Users",     icon: UserCog,           path: "/dashboard/users" },
+  // { label: "Users",     icon: UserCog,           path: "/dashboard/users" },
 ];
 
 // Light pastel colors picked randomly on hover.

@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import { ContactDetail, Contacts, Dashboard, Debts, FolderDetail, Login, Profile, Register, Users } from "./router/router"
+import { ContactDetail, Contacts, Dashboard, Debts, DebtsDetail, FolderDetail, Login, Profile, Register, Users } from "./router/router"
 import Layout from "./Layout/Layout"
 import Folders from "./pages/Folders/Folders"
 
@@ -21,10 +21,6 @@ export default function App() {
         {
           index: true,
           element: <Dashboard />
-        },
-        {
-          path: "debts",
-          element: <Debts />
         },
         {
           path: "contacts",
@@ -49,7 +45,15 @@ export default function App() {
         {
           path: "contact/:id",
           element: <ContactDetail />
-        }
+        },
+        {
+          path: "debts",
+          element: <Debts />
+        },
+        {
+          path: "debt/:id",
+          element: <DebtsDetail />
+        },
       ]
     }
   ])
