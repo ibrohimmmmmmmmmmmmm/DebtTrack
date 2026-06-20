@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import { ContactDetail, Contacts, Dashboard, Debts, DebtsDetail, FolderDetail, Login, Profile, Register, Users } from "./router/router"
+import { ContactDetail, Contacts, Dashboard, Debts, DebtsDetail, DebtPayments, FolderDetail, Login, Profile, Register, Users } from "./router/router"
 import Layout from "./Layout/Layout"
 import Folders from "./pages/Folders/Folders"
 
@@ -53,6 +53,10 @@ export default function App() {
         {
           path: "debt/:id",
           element: <DebtsDetail />
+        },
+        {
+          path: "debt/:id/payments",
+          element: <DebtPayments />
         },
       ]
     }
